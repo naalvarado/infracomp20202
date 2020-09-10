@@ -16,7 +16,10 @@ public class Cliente extends Thread {
 	}
 	
 	public void run() {
-		//TODO
+		for(int i = 0; i < mensajes.length; i++) {
+			buff.addMensaje(mensajes[i]);
+		}
+		System.out.println("Sale cliente: " + id);
 	}
 
 }
