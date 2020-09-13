@@ -8,7 +8,10 @@ public class Servidor extends Thread {
 	}
 	
 	public void run() {
-		//TODO
+		while(true) {
+			Mensaje ne = buff.removeMensaje();
+			System.out.println("Respuesta: " + ne.getContenido());
+		}
 	}
 	
 }

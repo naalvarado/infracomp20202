@@ -28,7 +28,7 @@ public class Buffer {
 		}
 	}
 	
-	public void removeMensaje(Mensaje m) {
+	public Mensaje removeMensaje() {
 		while(noMensajes == 0) {
 			try {
 				wait();
@@ -37,11 +37,14 @@ public class Buffer {
 				//do non
 			}
 		}
+		Mensaje re = new Mensaje(0);
 		synchronized(this) {
-			this.mensages.remove(m);
+			re = mensages.get(mensages.size() - 1);
+			this.mensages.remove(mensages.size() - 1);
 			noMensajes--;
 			notifyAll();
 		}
+		return re;
 	}
 
 	public int getMax() {
