@@ -17,9 +17,9 @@ public class Cliente extends Thread {
 	
 	public void run() {
 		for(int i = 0; i < mensajes.length; i++) {
+			System.out.println("Cliente: " + id + " mandando mensaje: " + mensajes[i].getContenido());
 			buff.addMensaje(mensajes[i]);
 		}
-		System.out.println("Sale cliente: " + id);
 	}
 
 }
