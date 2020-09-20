@@ -13,14 +13,6 @@ public class Buffer {
 	}
 
 	public void addMensaje(Mensaje m) {
-		while(noMensajes == max) {
-			try {
-				wait();
-			}
-			catch(Exception e) {
-				// do non
-			}
-		}
 		synchronized(this) {
 			this.mensages.add(m);
 			noMensajes++;
@@ -29,18 +21,11 @@ public class Buffer {
 	}
 	
 	public Mensaje removeMensaje() {
-		while(noMensajes == 0) {
-			try {
-				wait();
-			}
-			catch(Exception e) {
-				//do non
-			}
-		}
 		Mensaje re = new Mensaje(0);
 		synchronized(this) {
 			re = mensages.get(mensages.size() - 1);
 			this.mensages.remove(mensages.size() - 1);
+			re.setContenido(re.getContenido() + 1);
 			noMensajes--;
 			notifyAll();
 		}
