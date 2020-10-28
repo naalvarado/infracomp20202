@@ -1,6 +1,9 @@
 import java.security.MessageDigest;
+import java.util.ArrayList;
 
 public class ManejadorEncriptacion {
+	
+	public static ArrayList<String> arregloLetras1 = new ArrayList();
 	
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
 		byte[] data = texto.getBytes();
@@ -11,22 +14,21 @@ public class ManejadorEncriptacion {
 	
 	public static String identificar_entrada(byte[] hash, String algoritmo) throws Exception {
 		String re = "";
-		for(int i = 96; i < 123; i++) {
-			if(i == 96) {
-				re = "";
+		for(String s : arregloLetras1) {
+			byte[] temp = generar_codigo(s,algoritmo);
+			if(temp.equals(hash)) {
+				re = s;
 			}
-			else {
-				char aux = (char)i;
-				re = aux+""; 
-			}
-			//Esto no va a funcionar toca hacer arreglos de posibles combinaciones por tamaño y pasar el tamaño por parametro
-			for(int j = 96; j < 123; j++) {
-				for(int k = 96; k < 123; k++) {
-					
-				}
-			}	
 		}
-		return null;
+		return re;
+	}
+	
+	public static void llenarArreglos() {
+		for(int i = 97; i < 122; i++) {
+			char c = (char)i;
+			String sc = c+"";
+			arregloLetras1.add(sc);
+		}
 	}
 	
 	public static void imprimirHash(byte[] hash) {
@@ -41,17 +43,16 @@ public class ManejadorEncriptacion {
 	}
 	
 	public static void main(String args[]) {
-		String t = "Hola mundo";
+		llenarArreglos();
+		String t = "c";
 		String a = "MD5";
 		try {
 			byte[] h = generar_codigo(t,a);
 			imprimirHash(h);
+			System.out.println(identificar_entrada(h,a));
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		int la = (int) 'a';
-		int lz = (int) 'z';
-		System.out.println(""+la+" el a y z es "+lz);
+		}	
 	}
 
 }
