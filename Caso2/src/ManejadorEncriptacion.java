@@ -9,6 +9,26 @@ public class ManejadorEncriptacion {
 		return hash.digest();
 	}
 	
+	public static String identificar_entrada(byte[] hash, String algoritmo) throws Exception {
+		String re = "";
+		for(int i = 96; i < 123; i++) {
+			if(i == 96) {
+				re = "";
+			}
+			else {
+				char aux = (char)i;
+				re = aux+""; 
+			}
+			//Esto no va a funcionar toca hacer arreglos de posibles combinaciones por tamaño y pasar el tamaño por parametro
+			for(int j = 96; j < 123; j++) {
+				for(int k = 96; k < 123; k++) {
+					
+				}
+			}	
+		}
+		return null;
+	}
+	
 	public static void imprimirHash(byte[] hash) {
 		String pri = "";
 		for(int i = 0; i < hash.length; i++) {
@@ -28,7 +48,10 @@ public class ManejadorEncriptacion {
 			imprimirHash(h);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
+		int la = (int) 'a';
+		int lz = (int) 'z';
+		System.out.println(""+la+" el a y z es "+lz);
 	}
 
 }
