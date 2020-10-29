@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class ManejadorEncriptacion {
 	
 	public static ArrayList<String> arregloLetras1 = new ArrayList();
+	public static ArrayList<String> arregloLetras2 = new ArrayList();
 	
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
 		byte[] data = texto.getBytes();
@@ -21,14 +22,28 @@ public class ManejadorEncriptacion {
 				re = s;
 			}
 		}
+		if(re.equals("")) {
+			for(String s : arregloLetras2) {
+				byte[] temp = generar_codigo(s,algoritmo);
+				String stemp = imprimirHash(temp);
+				if(stemp.equals(hash)) {
+					re = s;
+				}
+			}
+		}
 		return re;
 	}
 	
 	public static void llenarArreglos() {
-		for(int i = 97; i < 123; i++) {
-			char c = (char)i;
+		for(int a = 97; a < 123; a++) {
+			char c = (char)a;
 			String sc = c+"";
 			arregloLetras1.add(sc);
+			for(int b = 97; b < 123; b++) {
+				char c2 = (char)b;
+				String sc2 = c+""+c2+"";
+				arregloLetras2.add(sc2);
+			}
 		}
 	}
 	
@@ -41,11 +56,11 @@ public class ManejadorEncriptacion {
 			pri += Integer.toHexString(hash[i] & 0xff).toLowerCase();
 		}
 		return pri;
-	}
+	}	
 	
 	public static void main(String args[]) {
 		llenarArreglos();
-		String t = "z";
+		String t = "ne";
 		String a = "MD5";
 		try {
 			byte[] h = generar_codigo(t,a);
