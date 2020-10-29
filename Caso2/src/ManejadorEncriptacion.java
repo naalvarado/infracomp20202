@@ -5,6 +5,8 @@ public class ManejadorEncriptacion {
 	
 	public static ArrayList<String> arregloLetras1 = new ArrayList();
 	public static ArrayList<String> arregloLetras2 = new ArrayList();
+	public static ArrayList<String> arregloLetras3 = new ArrayList();
+	public static ArrayList<String> arregloLetras4 = new ArrayList();
 	
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
 		byte[] data = texto.getBytes();
@@ -30,6 +32,24 @@ public class ManejadorEncriptacion {
 					re = s;
 				}
 			}
+			if(re.equals("")) {
+				for(String s : arregloLetras3) {
+					byte[] temp = generar_codigo(s,algoritmo);
+					String stemp = imprimirHash(temp);
+					if(stemp.equals(hash)) {
+						re = s;
+					}
+				}
+				if(re.equals("")) {
+					for(String s : arregloLetras4) {
+						byte[] temp = generar_codigo(s,algoritmo);
+						String stemp = imprimirHash(temp);
+						if(stemp.equals(hash)) {
+							re = s;
+						}
+					}
+				}
+			}
 		}
 		return re;
 	}
@@ -43,6 +63,16 @@ public class ManejadorEncriptacion {
 				char c2 = (char)b;
 				String sc2 = c+""+c2+"";
 				arregloLetras2.add(sc2);
+				for(int d = 97; d < 123; d++) {
+					char c3 = (char)d;
+					String sc3 = sc2+c3+"";
+					arregloLetras3.add(sc3);
+					for(int e = 97; e < 123; e++) {
+						char c4 = (char)e;
+						String sc4  = sc3+c4+"";
+						arregloLetras4.add(sc4);
+					}
+				}
 			}
 		}
 	}
@@ -60,7 +90,7 @@ public class ManejadorEncriptacion {
 	
 	public static void main(String args[]) {
 		llenarArreglos();
-		String t = "ne";
+		String t = "nerd";
 		String a = "MD5";
 		try {
 			byte[] h = generar_codigo(t,a);
