@@ -7,6 +7,7 @@ public class ManejadorEncriptacion {
 	public static ArrayList<String> arregloLetras2 = new ArrayList();
 	public static ArrayList<String> arregloLetras3 = new ArrayList();
 	public static ArrayList<String> arregloLetras4 = new ArrayList();
+	public static ArrayList<String> arregloLetras5 = new ArrayList();
 	
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
 		byte[] data = texto.getBytes();
@@ -48,6 +49,15 @@ public class ManejadorEncriptacion {
 							re = s;
 						}
 					}
+					if(re.equals("")) {
+						for(String s : arregloLetras5) {
+							byte[] temp = generar_codigo(s,algoritmo);
+							String stemp = imprimirHash(temp);
+							if(stemp.equals(hash)) {
+								re = s;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -71,6 +81,11 @@ public class ManejadorEncriptacion {
 						char c4 = (char)e;
 						String sc4  = sc3+c4+"";
 						arregloLetras4.add(sc4);
+						for(int f = 97; f < 123; f++) {
+							char c5 = (char)f;
+							String sc5 = sc4+c5+"";
+							arregloLetras5.add(sc5);
+						}
 					}
 				}
 			}
@@ -89,14 +104,30 @@ public class ManejadorEncriptacion {
 	}	
 	
 	public static void main(String args[]) {
+		long stLL = System.currentTimeMillis();
 		llenarArreglos();
-		String t = "nerd";
+		long finLL = System.currentTimeMillis();
+		long timeLL = (finLL - stLL)/1000;
+		System.out.println("Se demoro "+timeLL+"s en crear las listas!");
+		String t = "neraa";
 		String a = "MD5";
 		try {
+			long stGC = System.currentTimeMillis();
 			byte[] h = generar_codigo(t,a);
+			long finGC = System.currentTimeMillis();
+			long timeGC = finGC - stGC;
+			System.out.println("Se demora "+timeGC+"ms en generar un hash.");
+			long stIH = System.currentTimeMillis();
 			String hash = imprimirHash(h);
+			long finIH = System.currentTimeMillis();
+			long timeIH = finIH - stIH;
+			System.out.println("Se demora "+timeIH+"ms en pasar el hash de byte[] a String.");
 			System.out.println(hash);
+			long stIE = System.currentTimeMillis();
 			System.out.println(identificar_entrada(hash,a));
+			long finIE = System.currentTimeMillis();
+			long timeIE = (finIE - stIE)/1000;
+			System.out.println("Se demoro "+timeIE+"s en encontrar la entrada!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
