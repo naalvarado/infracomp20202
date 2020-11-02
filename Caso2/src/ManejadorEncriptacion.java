@@ -2,94 +2,79 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 
 public class ManejadorEncriptacion {
-	
-	public static ArrayList<String> arregloLetras1 = new ArrayList();
-	public static ArrayList<String> arregloLetras2 = new ArrayList();
-	public static ArrayList<String> arregloLetras3 = new ArrayList();
-	public static ArrayList<String> arregloLetras4 = new ArrayList();
-	public static ArrayList<String> arregloLetras5 = new ArrayList();
-	
+		
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
 		byte[] data = texto.getBytes();
 		MessageDigest hash = MessageDigest.getInstance(algoritmo);
 		hash.update(data);
 		return hash.digest();
-	}
+	}	
 	
-	public static String identificar_entrada(String hash, String algoritmo) throws Exception {
-		String re = "";
-		for(String s : arregloLetras1) {
-			byte[] temp = generar_codigo(s,algoritmo);
-			String stemp = imprimirHash(temp);
-			if(stemp.equals(hash)) {
-				re = s;
+	public static String identificar_entrada(String hash, String algo) throws Exception {
+		for(int a = 97; a < 123; a++) {
+			char c1 = (char)a;
+			String sc1 = c1+"";
+			byte[] codigo1 = generar_codigo(sc1, algo);
+			String sh1 = imprimirHash(codigo1);
+			if(sh1.equals(hash)) {
+				return sc1;
 			}
-		}
-		if(re.equals("")) {
-			for(String s : arregloLetras2) {
-				byte[] temp = generar_codigo(s,algoritmo);
-				String stemp = imprimirHash(temp);
-				if(stemp.equals(hash)) {
-					re = s;
+			for(int b = 97; b < 123; b++) {
+				char c2 = (char)b;
+				String sc2 = c1+""+c2+"";
+				byte[] codigo2 = generar_codigo(sc2, algo);
+				String sh2 = imprimirHash(codigo2);
+				if(sh2.equals(hash)) {
+					return sc2;
 				}
-			}
-			if(re.equals("")) {
-				for(String s : arregloLetras3) {
-					byte[] temp = generar_codigo(s,algoritmo);
-					String stemp = imprimirHash(temp);
-					if(stemp.equals(hash)) {
-						re = s;
+				for(int c = 97; c < 123; c++) {
+					char c3 = (char)c;
+					String sc3 = sc2+c3+"";
+					byte[] codigo3 = generar_codigo(sc3, algo);
+					String sh3 = imprimirHash(codigo3);
+					if(sh3.equals(hash)) {
+						return sc3;
 					}
-				}
-				if(re.equals("")) {
-					for(String s : arregloLetras4) {
-						byte[] temp = generar_codigo(s,algoritmo);
-						String stemp = imprimirHash(temp);
-						if(stemp.equals(hash)) {
-							re = s;
+					for(int d = 97; d < 123; d++) {
+						char c4 = (char)d;
+						String sc4  = sc3+c4+"";
+						byte[] codigo4 = generar_codigo(sc4, algo);
+						String sh4 = imprimirHash(codigo4);
+						if(sh4.equals(hash)) {
+							return sc4;
 						}
-					}
-					if(re.equals("")) {
-						for(String s : arregloLetras5) {
-							byte[] temp = generar_codigo(s,algoritmo);
-							String stemp = imprimirHash(temp);
-							if(stemp.equals(hash)) {
-								re = s;
+						for(int e = 97; e < 123; e++) {
+							char c5 = (char)e;
+							String sc5 = sc4+c5+"";
+							byte[] codigo5 = generar_codigo(sc5, algo);
+							String sh5 = imprimirHash(codigo5);
+							if(sh5.equals(hash)) {
+								return sc5;
+							}
+							for(int f = 97; f < 123; f++) {
+								char c6 = (char)f;
+								String sc6 = sc5+c6+"";
+								byte[] codigo6 = generar_codigo(sc6, algo);
+								String sh6 = imprimirHash(codigo6);
+								if(sh6.equals(hash)) {
+									return sc6;
+								}
+								for(int g = 97; g < 123; g++) {
+									char c7 = (char)g;
+									String sc7 = sc6+c7+"";
+									byte[] codigo7 = generar_codigo(sc7, algo);
+									String sh7 = imprimirHash(codigo7);
+									if(sh7.equals(hash)) {
+										return sc7;
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-		return re;
-	}
-	
-	public static void llenarArreglos() {
-		for(int a = 97; a < 123; a++) {
-			char c = (char)a;
-			String sc = c+"";
-			arregloLetras1.add(sc);
-			for(int b = 97; b < 123; b++) {
-				char c2 = (char)b;
-				String sc2 = c+""+c2+"";
-				arregloLetras2.add(sc2);
-				for(int d = 97; d < 123; d++) {
-					char c3 = (char)d;
-					String sc3 = sc2+c3+"";
-					arregloLetras3.add(sc3);
-					for(int e = 97; e < 123; e++) {
-						char c4 = (char)e;
-						String sc4  = sc3+c4+"";
-						arregloLetras4.add(sc4);
-						for(int f = 97; f < 123; f++) {
-							char c5 = (char)f;
-							String sc5 = sc4+c5+"";
-							arregloLetras5.add(sc5);
-						}
-					}
-				}
-			}
-		}
+		return null;
 	}
 	
 	public static String imprimirHash(byte[] hash) {
@@ -104,24 +89,13 @@ public class ManejadorEncriptacion {
 	}	
 	
 	public static void main(String args[]) {
-		long stLL = System.currentTimeMillis();
-		llenarArreglos();
-		long finLL = System.currentTimeMillis();
-		long timeLL = (finLL - stLL)/1000;
-		System.out.println("Se demoro "+timeLL+"s en crear las listas!");
-		String t = "neraa";
+		// NO PONGA VALORES MAYORES A 'a' EN EL PRIMER CARACTER
+		// NO PONGA VALORES MOTORES A 'b' EN EL SEGUNDO CARACTER
+		String t = "abccccc";
 		String a = "MD5";
 		try {
-			long stGC = System.currentTimeMillis();
 			byte[] h = generar_codigo(t,a);
-			long finGC = System.currentTimeMillis();
-			long timeGC = finGC - stGC;
-			System.out.println("Se demora "+timeGC+"ms en generar un hash.");
-			long stIH = System.currentTimeMillis();
 			String hash = imprimirHash(h);
-			long finIH = System.currentTimeMillis();
-			long timeIH = finIH - stIH;
-			System.out.println("Se demora "+timeIH+"ms en pasar el hash de byte[] a String.");
 			System.out.println(hash);
 			long stIE = System.currentTimeMillis();
 			System.out.println(identificar_entrada(hash,a));
