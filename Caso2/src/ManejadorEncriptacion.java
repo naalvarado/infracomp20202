@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ManejadorEncriptacion {
+	
+	public static String resultado;
+	public static boolean encont;
 		
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
 		byte[] data = texto.getBytes();
@@ -85,18 +88,26 @@ public class ManejadorEncriptacion {
 	public static void main(String args[]) {
 		// NO PONGA VALORES MAYORES A 'a' EN EL PRIMER CARACTER
 		// NO PONGA VALORES MOTORES A 'f' EN EL SEGUNDO CARACTER
-		String t = "afbcccc";
+		String t = "af";
 		String a = "MD5";
 		try {
 			byte[] h = generar_codigo(t,a);
 			String hash = imprimirHash(h);
 			System.out.println(hash);
 			
-			long stIE = System.currentTimeMillis();
-			System.out.println(identificar_entrada(h,a));
-			long finIE = System.currentTimeMillis();
-			long timeIE = (finIE - stIE)/1000;
-			System.out.println("Se demoro "+timeIE+"s en encontrar la entrada!");
+			BuscadorEntrada[] be = new BuscadorEntrada[26];
+			encont = false;
+			for(int i = 97; i < 123; i++) {
+				char c = (char)i;
+				be[i-97] = new BuscadorEntrada(a,h,resultado,c,i, encont);
+				be[i-97].start();
+			}
+			
+			//long stIE = System.currentTimeMillis();
+			//System.out.println(identificar_entrada(h,a));
+			//long finIE = System.currentTimeMillis();
+			//long timeIE = (finIE - stIE)/1000;
+			//System.out.println("Se demoro "+timeIE+"s en encontrar la entrada!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
