@@ -47,7 +47,7 @@ public class BuscadorEntrada extends Thread {
 				
 				for(int b = 97; b < 123; b++) {
 					char c2 = (char)b;
-					String sc2 = c1+""+c2+"";
+					String sc2 = sc1+c2+"";
 					byte[] codigo2;
 					try {
 						codigo2 = generar_codigo(sc2, algoritmo);
