@@ -88,7 +88,7 @@ public class ManejadorEncriptacion {
 	public static void main(String args[]) {
 		// NO PONGA VALORES MAYORES A 'a' EN EL PRIMER CARACTER
 		// NO PONGA VALORES MOTORES A 'f' EN EL SEGUNDO CARACTER
-		String t = "anzzzzz";
+		String t = "zzzzz";
 		String a = "MD5";
 		try {
 			byte[] h = generar_codigo(t,a);
