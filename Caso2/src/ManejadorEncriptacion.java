@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class ManejadorEncriptacion {
 	
 	public static String resultado;
-	public static boolean encont;
+	public static Respuesta re;
 		
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
 		byte[] data = texto.getBytes();
@@ -59,7 +59,7 @@ public class ManejadorEncriptacion {
 			
 			// TODO TOCA CREAR UN METODO QUE PASE DE String A byte[]
 			
-			String t = "aazzzzz";
+			String t = "aaazzzz";
 			String a = "MD5";
 			byte[] h = generar_codigo(t,a);
 			String hash = imprimirHash(h);
@@ -68,10 +68,10 @@ public class ManejadorEncriptacion {
 			System.out.println(hash);
 			
 			BuscadorEntrada[] be = new BuscadorEntrada[26];
-			encont = false;
+			re = new Respuesta();
 			for(int i = 97; i < 123; i++) {
 				char c = (char)i;
-				be[i-97] = new BuscadorEntrada(a,h,resultado,c,i);
+				be[i-97] = new BuscadorEntrada(a,h,resultado,c,re);
 				be[i-97].start();
 			}
 			
