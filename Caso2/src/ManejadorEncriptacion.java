@@ -59,8 +59,8 @@ public class ManejadorEncriptacion {
 			
 			// TODO TOCA CREAR UN METODO QUE PASE DE String A byte[]
 			
-			String t = "aaazzzz";
-			String a = "MD5";
+			String t = "zzzzzzz";
+			String a = "SHA-512";
 			byte[] h = generar_codigo(t,a);
 			String hash = imprimirHash(h);
 			//byte[] test = stringToByteA(hash);
