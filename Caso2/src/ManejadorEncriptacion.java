@@ -1,6 +1,7 @@
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class ManejadorEncriptacion {
 	
@@ -12,66 +13,23 @@ public class ManejadorEncriptacion {
 		MessageDigest hash = MessageDigest.getInstance(algoritmo);
 		hash.update(data);
 		return hash.digest();
-	}	
+	}
 	
-	public static String identificar_entrada(byte[] hash, String algo) throws Exception {
-		for(int a = 97; a < 123; a++) {
-			char c1 = (char)a;
-			String sc1 = c1+"";
-			byte[] codigo1 = generar_codigo(sc1, algo);
-			if(Arrays.equals(hash, codigo1)) {
-				return sc1;
-			}
-			for(int b = 97; b < 123; b++) {
-				char c2 = (char)b;
-				String sc2 = c1+""+c2+"";
-				byte[] codigo2 = generar_codigo(sc2, algo);
-				if(Arrays.equals(hash, codigo2)) {
-					return sc2;
-				}
-				for(int c = 97; c < 123; c++) {
-					char c3 = (char)c;
-					String sc3 = sc2+c3+"";
-					byte[] codigo3 = generar_codigo(sc3, algo);
-					if(Arrays.equals(hash, codigo3)) {
-						return sc3;
-					}
-					for(int d = 97; d < 123; d++) {
-						char c4 = (char)d;
-						String sc4  = sc3+c4+"";
-						byte[] codigo4 = generar_codigo(sc4, algo);
-						if(Arrays.equals(hash, codigo4)) {
-							return sc4;
-						}
-						for(int e = 97; e < 123; e++) {
-							char c5 = (char)e;
-							String sc5 = sc4+c5+"";
-							byte[] codigo5 = generar_codigo(sc5, algo);
-							if(Arrays.equals(hash, codigo5)) {
-								return sc5;
-							}
-							for(int f = 97; f < 123; f++) {
-								char c6 = (char)f;
-								String sc6 = sc5+c6+"";
-								byte[] codigo6 = generar_codigo(sc6, algo);
-								if(Arrays.equals(hash, codigo6)) {
-									return sc6;
-								}
-								for(int g = 97; g < 123; g++) {
-									char c7 = (char)g;
-									String sc7 = sc6+c7+"";
-									byte[] codigo7 = generar_codigo(sc7, algo);
-									if(Arrays.equals(hash, codigo7)) {
-										return sc7;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+	public static byte[] stringToByteA(String h) {
+		byte[] re = new byte[h.length()/2];
+		int j = 0;
+		for(int i = 0; i < h.length(); i=i+2) {
+			String temp = h.charAt(i) + h.charAt(i+1) + "";
+			re[j] = hexToByte(temp);
+			j++;
 		}
-		return null;
+		return re;
+	}
+	
+	public static byte hexToByte(String s) {
+		int primero = Character.digit(s.charAt(0), 16);
+		int segundo = Character.digit(s.charAt(1), 16);
+		return (byte) ((primero << 4) + segundo);
 	}
 	
 	public static String imprimirHash(byte[] hash) {
@@ -86,20 +44,31 @@ public class ManejadorEncriptacion {
 	}	
 	
 	public static void main(String args[]) {
-		// NO PONGA VALORES MAYORES A 'a' EN EL PRIMER CARACTER
-		// NO PONGA VALORES MOTORES A 'f' EN EL SEGUNDO CARACTER
-		String t = "zzzzz";
-		String a = "MD5";
+		System.out.println("Bienbenido!");
 		try {
+			//Scanner s = new Scanner(System.in);
+			//System.out.println("para crear un hash oprima 1");
+			//System.out.println("para encontrar el texto original de un hash oprima 2");
+			//String op = s.next();
+			//if(op.equals("1")) {
+				//crear hash
+			//}
+			//else if(op.equals("2")) {
+				//romper hash
+			//}
+			String t = "aazzzzz";
+			String a = "MD5";
 			byte[] h = generar_codigo(t,a);
 			String hash = imprimirHash(h);
+			//byte[] test = stringToByteA(hash);
+			//System.out.println(Arrays.equals(h,test));
 			System.out.println(hash);
 			
 			BuscadorEntrada[] be = new BuscadorEntrada[26];
 			encont = false;
 			for(int i = 97; i < 123; i++) {
 				char c = (char)i;
-				be[i-97] = new BuscadorEntrada(a,h,resultado,c,i, encont);
+				be[i-97] = new BuscadorEntrada(a,h,resultado,c,i);
 				be[i-97].start();
 			}
 			
