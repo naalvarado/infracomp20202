@@ -56,6 +56,9 @@ public class ManejadorEncriptacion {
 			//else if(op.equals("2")) {
 				//romper hash
 			//}
+			
+			// TODO TOCA CREAR UN METODO QUE PASE DE String A byte[]
+			
 			String t = "aazzzzz";
 			String a = "MD5";
 			byte[] h = generar_codigo(t,a);
@@ -72,11 +75,6 @@ public class ManejadorEncriptacion {
 				be[i-97].start();
 			}
 			
-			//long stIE = System.currentTimeMillis();
-			//System.out.println(identificar_entrada(h,a));
-			//long finIE = System.currentTimeMillis();
-			//long timeIE = (finIE - stIE)/1000;
-			//System.out.println("Se demoro "+timeIE+"s en encontrar la entrada!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
