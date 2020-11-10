@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class ManejadorEncriptacion {
 	
-	public static String resultado;
 	public static Respuesta re;
 		
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
@@ -46,32 +45,21 @@ public class ManejadorEncriptacion {
 	public static void main(String args[]) {
 		System.out.println("Bienbenido!");
 		try {
-			//Scanner s = new Scanner(System.in);
-			//System.out.println("para crear un hash oprima 1");
-			//System.out.println("para encontrar el texto original de un hash oprima 2");
-			//String op = s.next();
-			//if(op.equals("1")) {
-				//crear hash
-			//}
-			//else if(op.equals("2")) {
-				//romper hash
-			//}
+			Scanner s = new Scanner(System.in);
+			System.out.println("Ingrese la cadena deseada: ");
+			String t = s.next();
+			System.out.println("Ingrese el algoritmo deseado: ");
+			String a = s.next();
 			
-			// TODO TOCA CREAR UN METODO QUE PASE DE String A byte[]
-			
-			String t = "zzzzzzz";
-			String a = "SHA-512";
 			byte[] h = generar_codigo(t,a);
 			String hash = imprimirHash(h);
-			//byte[] test = stringToByteA(hash);
-			//System.out.println(Arrays.equals(h,test));
 			System.out.println(hash);
 			
 			BuscadorEntrada[] be = new BuscadorEntrada[26];
 			re = new Respuesta();
 			for(int i = 97; i < 123; i++) {
 				char c = (char)i;
-				be[i-97] = new BuscadorEntrada(a,h,resultado,c,re);
+				be[i-97] = new BuscadorEntrada(a,h,c,re);
 				be[i-97].start();
 			}
 			

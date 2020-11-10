@@ -3,15 +3,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class BuscadorEntrada extends Thread {
-	private String re;
 	private char chara;
 	private String algoritmo;
 	private byte[] hash;
 	private long stIE;
 	private Respuesta res;
 	
-	public BuscadorEntrada(String algo, byte[] h, String Pre, char c, Respuesta r) {
-		this.re = Pre;
+	public BuscadorEntrada(String algo, byte[] h, char c, Respuesta r) {
 		this.algoritmo = algo;
 		this.hash = h;
 		this.chara = c;
@@ -77,8 +75,7 @@ public class BuscadorEntrada extends Thread {
 		if(Arrays.equals(hash, cod)) {
 			long finIE = System.currentTimeMillis();
 			long timeIE = (finIE - stIE);
-			re = prime;
-			System.out.println(re);
+			System.out.println(prime);
 			System.out.println("Se demoro "+convertmillis(timeIE)+" en encontrar la entrada!");
 			res.ternimo();
 			//System.exit(0);
