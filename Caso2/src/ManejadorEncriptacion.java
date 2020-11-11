@@ -1,7 +1,13 @@
+import java.lang.management.ManagementFactory;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import javax.management.Attribute;
+import javax.management.AttributeList;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 
 public class ManejadorEncriptacion {
 	
@@ -40,7 +46,25 @@ public class ManejadorEncriptacion {
 			pri += Integer.toHexString(hash[i] & 0xff).toLowerCase();
 		}
 		return pri;
-	}	
+	}
+	
+	public double getSystemCpuLoad() throws Exception {
+		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+		ObjectName name = ObjectName.getInstance("java.lang:type=OperatingSystem");
+		AttributeList list = mbs.getAttributes(name, new String[] {"SystemCpuLoad"});
+		
+		if(list.isEmpty()) {
+			return Double.NaN;
+		}
+		
+		Attribute att = (Attribute)list.get(0);
+		Double value = (Double)att.getValue();
+		
+		if(value == -1.0) {
+			return Double.NaN;
+		}
+		return ((int)(value*1000) / 10.0);
+	}
 	
 	public static void main(String args[]) {
 		System.out.println("Bienbenido!");
@@ -48,6 +72,10 @@ public class ManejadorEncriptacion {
 			Scanner s = new Scanner(System.in);
 			System.out.println("Ingrese la cadena deseada: ");
 			String t = s.next();
+			if(t.length() != 7) {
+				System.out.println("Las cadenas deben ser de 7 caracteres");
+				System.exit(0);
+			}
 			System.out.println("Ingrese el algoritmo deseado: ");
 			String a = s.next();
 			
