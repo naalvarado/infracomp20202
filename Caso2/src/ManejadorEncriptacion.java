@@ -12,6 +12,19 @@ import javax.management.ObjectName;
 public class ManejadorEncriptacion {
 	
 	public static Respuesta re;
+	
+	// Arreglo para 1 thread
+	
+	public static char[] arreglo11 = new char[] {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+	
+	// Arreglos para 2 threads
+	
+	public static char[] arreglo21 = new char[] {'a','b','c','d','e','f','g','h','i','j','k','l','m'};
+	public static char[] arreglo22 = new char[] {'n','o','p','q','r','s','t','u','v','w','x','y','z'};
+	
+	// Arreglos para 4 threads
+	
+	// Arreglos para 8 threads
 		
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
 		byte[] data = texto.getBytes();
@@ -48,23 +61,6 @@ public class ManejadorEncriptacion {
 		return pri;
 	}
 	
-	public double getSystemCpuLoad() throws Exception {
-		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-		ObjectName name = ObjectName.getInstance("java.lang:type=OperatingSystem");
-		AttributeList list = mbs.getAttributes(name, new String[] {"SystemCpuLoad"});
-		
-		if(list.isEmpty()) {
-			return Double.NaN;
-		}
-		
-		Attribute att = (Attribute)list.get(0);
-		Double value = (Double)att.getValue();
-		
-		if(value == -1.0) {
-			return Double.NaN;
-		}
-		return ((int)(value*1000) / 10.0);
-	}
 	
 	public static void main(String args[]) {
 		System.out.println("Bienbenido!");
@@ -90,6 +86,8 @@ public class ManejadorEncriptacion {
 				be[i-97] = new BuscadorEntrada(a,h,c,re);
 				be[i-97].start();
 			}
+			MonitorCPU mcpu = new MonitorCPU(re);
+			mcpu.start();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

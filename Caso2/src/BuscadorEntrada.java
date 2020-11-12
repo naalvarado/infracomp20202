@@ -17,8 +17,12 @@ public class BuscadorEntrada extends Thread {
 	}
 	
 	public void run() {
+		encontrar(chara);
+	}
+	
+	public void encontrar(char cini) {
 		stIE = System.currentTimeMillis();
-		String temp = chara+"";
+		String temp = cini+"";
 		for(int a = 97; a < 123; a++) {
 			if(!res.getTer()) {
 				char c1 = (char)a;
@@ -95,7 +99,7 @@ public class BuscadorEntrada extends Thread {
 			millis = millis % second;
 		}
 
-		return (hours + "h, " + minutes + "min, " + seconds + "s and " + millis + "ms");
+		return (hours + "h, " + minutes + "min, " + seconds + "s y " + millis + "ms");
 	}
 	
 	public static byte[] generar_codigo(String texto, String algoritmo) {
