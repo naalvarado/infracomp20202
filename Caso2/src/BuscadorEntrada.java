@@ -3,21 +3,25 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class BuscadorEntrada extends Thread {
-	private char chara;
+	private char[] chars;
 	private String algoritmo;
 	private byte[] hash;
 	private long stIE;
 	private Respuesta res;
 	
-	public BuscadorEntrada(String algo, byte[] h, char c, Respuesta r) {
+	public BuscadorEntrada(String algo, byte[] h, char[] c, Respuesta r) {
 		this.algoritmo = algo;
 		this.hash = h;
-		this.chara = c;
+		this.chars = c;
 		res = r;
 	}
 	
 	public void run() {
-		encontrar(chara);
+		while(!res.getTer()) {
+			for(int i = 0; i < chars.length; i++) {
+				encontrar(chars[i]);
+			}
+		}
 	}
 	
 	public void encontrar(char cini) {

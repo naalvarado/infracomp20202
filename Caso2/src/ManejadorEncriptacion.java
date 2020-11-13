@@ -24,7 +24,21 @@ public class ManejadorEncriptacion {
 	
 	// Arreglos para 4 threads
 	
+	public static char[] arreglo41 = new char[] {'a','b','c','d','e','f'};
+	public static char[] arreglo42 = new char[] {'g','h','i','j','k','l','m'};
+	public static char[] arreglo43 = new char[] {'n','o','p','q','r','s'};
+	public static char[] arreglo44 = new char[] {'t','u','v','w','x','y','z'};
+	
 	// Arreglos para 8 threads
+	
+	public static char[] arreglo81 = new char[] {'a','b','c'};
+	public static char[] arreglo82 = new char[] {'d','e','f'};
+	public static char[] arreglo83 = new char[] {'g','h','i'};
+	public static char[] arreglo84 = new char[] {'j','k','l','m'};
+	public static char[] arreglo85 = new char[] {'n','o','p'};
+	public static char[] arreglo86 = new char[] {'q','r','s'};
+	public static char[] arreglo87 = new char[] {'t','u','v'};
+	public static char[] arreglo88 = new char[] {'w','x','y','z'};
 		
 	public static byte[] generar_codigo(String texto, String algoritmo) throws Exception {
 		byte[] data = texto.getBytes();
@@ -75,19 +89,77 @@ public class ManejadorEncriptacion {
 			System.out.println("Ingrese el algoritmo deseado: ");
 			String a = s.next();
 			
+			System.out.println("Cuantos threads quiere usar? (1,2,4,8)");
+			int thre = s.nextInt();
+			if(thre != 1 && thre != 2 && thre != 4 && thre != 8) {
+				System.out.println("Solo se puede 1,2,4 o 8 threads");
+				System.exit(0);
+			}
+			
+			s.close();
+			
 			byte[] h = generar_codigo(t,a);
 			String hash = imprimirHash(h);
 			System.out.println(hash);
 			
-			BuscadorEntrada[] be = new BuscadorEntrada[26];
 			re = new Respuesta();
-			for(int i = 97; i < 123; i++) {
-				char c = (char)i;
-				be[i-97] = new BuscadorEntrada(a,h,c,re);
-				be[i-97].start();
+			if(thre == 8) {
+				BuscadorEntrada b1 = new BuscadorEntrada(a,h,arreglo81,re);
+				BuscadorEntrada b2 = new BuscadorEntrada(a,h,arreglo82,re);
+				BuscadorEntrada b3 = new BuscadorEntrada(a,h,arreglo83,re);
+				BuscadorEntrada b4 = new BuscadorEntrada(a,h,arreglo84,re);
+				BuscadorEntrada b5 = new BuscadorEntrada(a,h,arreglo85,re);
+				BuscadorEntrada b6 = new BuscadorEntrada(a,h,arreglo86,re);
+				BuscadorEntrada b7 = new BuscadorEntrada(a,h,arreglo87,re);
+				BuscadorEntrada b8 = new BuscadorEntrada(a,h,arreglo88,re);
+				
+				MonitorCPU mcpu = new MonitorCPU(re);
+				
+				b1.start();
+				b2.start();
+				b3.start();
+				b4.start();
+				b5.start();
+				b6.start();
+				b7.start();
+				b8.start();
+				
+				mcpu.start();
 			}
-			MonitorCPU mcpu = new MonitorCPU(re);
-			mcpu.start();
+			else if(thre == 4) {
+				BuscadorEntrada b1 = new BuscadorEntrada(a,h,arreglo41,re);
+				BuscadorEntrada b2 = new BuscadorEntrada(a,h,arreglo42,re);
+				BuscadorEntrada b3 = new BuscadorEntrada(a,h,arreglo43,re);
+				BuscadorEntrada b4 = new BuscadorEntrada(a,h,arreglo44,re);
+				
+				MonitorCPU mcpu = new MonitorCPU(re);
+				
+				b1.start();
+				b2.start();
+				b3.start();
+				b4.start();
+				
+				mcpu.start();
+			}
+			else if(thre == 2) {
+				BuscadorEntrada b1 = new BuscadorEntrada(a,h,arreglo21,re);
+				BuscadorEntrada b2 = new BuscadorEntrada(a,h,arreglo22,re);
+				
+				MonitorCPU mcpu = new MonitorCPU(re);
+				
+				b1.start();
+				b2.start();
+				
+				mcpu.start();
+			}
+			else if(thre == 1) {
+				BuscadorEntrada b = new BuscadorEntrada(a,h,arreglo11,re);
+				
+				MonitorCPU mcpu = new MonitorCPU(re);
+				
+				b.start();
+				mcpu.start();
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
