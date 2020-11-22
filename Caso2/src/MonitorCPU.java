@@ -22,7 +22,7 @@ public class MonitorCPU extends Thread {
 			double load = getSystemCpuLoad();
 			System.out.println(load);
 			try {
-				TimeUnit.MINUTES.sleep(3);
+				TimeUnit.MINUTES.sleep(2);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

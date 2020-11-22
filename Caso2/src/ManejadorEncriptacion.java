@@ -163,7 +163,8 @@ public class ManejadorEncriptacion {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
+		System.out.println(Runtime.getRuntime().totalMemory() + "HOla");
 	}
 
 }

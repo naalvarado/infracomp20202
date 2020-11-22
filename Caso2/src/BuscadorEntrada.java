@@ -17,6 +17,7 @@ public class BuscadorEntrada extends Thread {
 	}
 	
 	public void run() {
+		stIE = System.currentTimeMillis();
 		while(!res.getTer()) {
 			for(int i = 0; i < chars.length; i++) {
 				encontrar(chars[i]);
@@ -24,8 +25,7 @@ public class BuscadorEntrada extends Thread {
 		}
 	}
 	
-	public void encontrar(char cini) {
-		stIE = System.currentTimeMillis();
+	public void encontrar(char cini) {	
 		String temp = cini+"";
 		for(int a = 97; a < 123; a++) {
 			if(!res.getTer()) {
